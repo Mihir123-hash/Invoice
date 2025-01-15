@@ -1,0 +1,9 @@
+Flask
+Flask-SQLAlchemy
+Flask-Mail
+mysql-connector-python
+python-dotenv
+xhtml2pdf
+num2words
+pandas
+openpyxl

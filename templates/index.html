@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7f9fc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+        .btn-sm {
+            font-size: 0.85rem;
+            padding: 5px 10px;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        .badge-cleared {
+            background-color: #28a745;
+        }
+        .badge-not-cleared {
+            background-color: #dc3545;
+        }
+        .table-responsive {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            background-color: #fff;
+            border-radius: 10px;
+        }
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        h1 {
+            color: #343a40;
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #0069d9;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .btn-danger {
+            background-color: #e63946;
+            border: none;
+        }
+        .btn-danger:hover {
+            background-color: #d62839;
+        }
+        .filter-form input {
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            padding: 0.5rem;
+        }
+        .filter-form button {
+            margin-top: 8px;
+        }
+        .actions form {
+            display: inline-block;
+        }
+        .header-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="header-buttons mb-4">
+            <h1>Invoice List</h1>
+            <a href="{{ url_for('add_invoice') }}" class="btn btn-primary btn-lg">Add New Invoice</a>
+        </div>
+
+        <div class="mb-3">
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <ul class="mb-0">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- Filter Form -->
+        <form id="filterForm" method="POST" class="row gy-3 filter-form mb-4">
+            <div class="col-md-3">
+                <input type="text" name="vendor" class="form-control" placeholder="Vendor" value="{{ request.form.get('vendor', '') }}">
+            </div>
+            <div class="col-md-2">
+                <input type="date" name="invoice_date" class="form-control" value="{{ request.form.get('invoice_date', '') }}">
+            </div>
+            <div class="col-md-2">
+                <input type="date" name="date_submission" class="form-control" value="{{ request.form.get('date_submission', '') }}">
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="invoice_number" class="form-control" placeholder="Invoice Number" value="{{ request.form.get('invoice_number', '') }}">
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="po_number" class="form-control" placeholder="PO Number" value="{{ request.form.get('po_number', '') }}">
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-primary w-100">Filter</button>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-danger w-100" onclick="clearFilters()">Clear</button>
+            </div>
+        </form>
+
+        <!-- Filter Links -->
+        <div class="mb-4 d-flex gap-2">
+            <a href="{{ url_for('index', filter='all') }}" class="btn btn-info btn-sm">All Invoices</a>
+            <a href="{{ url_for('index', filter='cleared') }}" class="btn btn-success btn-sm">Cleared Invoices</a>
+            <a href="{{ url_for('index', filter='uncleared') }}" class="btn btn-danger btn-sm">Uncleared Invoices</a>
+        </div>
+
+        <!-- Invoice Table -->
+        <div class="table-responsive shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+            <table class="table table-striped table-hover table-bordered align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Invoice Date</th>
+                        <th>Date Received</th>
+                        <th>Vendor</th>
+                        <th>Invoice Number</th>
+                        <th>PO Number</th>
+                        <th>MSME</th>
+                        <th>Date of Submission</th>
+                        <th>Approved By</th>
+                        <th>HOD Approval</th>
+                        <th>CEO Approval</th>
+                        <th>Reviewed By</th>
+                        <th>Created By</th>
+                        <th>TAG 1</th>
+                        <th>TAG 2</th>
+                        <th>Invoice Amount</th>
+                        <th>GST</th>
+                        <th>Total Amount</th>
+                        <th>Invoice Cleared</th>
+                        <th>Cleared Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for invoice in invoices %}
+                    <tr>
+                        <td>{{ invoice.invoice_date }}</td>
+                        <td>{{ invoice.date_received }}</td>
+                        <td>{{ invoice.vendor }}</td>
+                        <td>{{ invoice.invoice_number }}</td>
+                        <td>{{ invoice.po_number }}</td>
+                        <td>{{ invoice.msme }}</td>
+                        <td>{{ invoice.date_submission }}</td>
+                        <td>{{ invoice.approved_by or 'N/A' }}</td>
+                        <td>{{ invoice.hod_values or 'N/A' }}</td>
+                        <td>{{ invoice.ceo_values or 'N/A' }}</td>
+                        <td>{{ invoice.reviewed_by or 'N/A' }}</td>
+                        <td>{{ invoice.created_by }}</td>
+                        <td>{{ invoice.tag1 }}</td>
+                        <td>{{ invoice.tag2 }}</td>
+                        <td>{{ invoice.invoice_amount }}</td>
+                        <td>{{ invoice.gst }}</td>
+                        <td>{{ invoice.total_amount }}</td>
+                        <td>
+                            {% if invoice.invoice_cleared == 'Yes' %}
+                                <span class="badge badge-cleared">Cleared</span>
+                            {% else %}
+                                <span class="badge badge-not-cleared">Not Cleared</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ invoice.invoice_cleared_date if invoice.invoice_cleared == 'Yes' else 'N/A' }}</td>
+                        <td class="actions">
+                            <a href="{{ url_for('edit_invoice', id=invoice.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ url_for('delete_invoice', id=invoice.id) }}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this invoice?');">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        function clearFilters() {
+            document.getElementById('filterForm').reset();
+            window.location.href = "{{ url_for('index') }}";
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

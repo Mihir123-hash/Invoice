@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Payment Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 8px; /* Reduced font size by 2 */
+            margin: 10px; /* Minimal margins */
+            background-color: #f4f4f9;
+            line-height: 1.3; /* Adjusted line height for better readability */
+        }
+        table {
+            width: 100%; /* Full width table */
+            border-collapse: collapse;
+            margin: 10px auto; /* Slightly increased margin */
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #000; /* Dark black borders */
+            padding: 3px; /* Further reduced padding */
+            font-size: 8px; /* Reduced font size */
+            line-height: 1.3; /* Slightly decreased line height */
+            word-wrap: break-word; /* Allow text wrapping */
+            white-space: normal; /* Ensure text does not overflow */
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        h1 {
+            font-size: 14px; /* Adjusted title font size */
+            margin: 10px 0;
+        }
+        h4 {
+            font-size: 10px; /* Adjusted subtitle font size */
+            margin: 5px 0;
+        }
+        @page {
+            size: A4; /* Portrait orientation */
+            margin: 10mm; /* Adjusted page margins */
+        }
+        table, tr, td {
+            page-break-inside: avoid; /* Prevent row breaks */
+        }
+    </style>
+        
+      
+</head>
+<body>
+
+    <table width="100%">
+        <tr>
+            <td colspan="6" rowspan="1" align="center"  >
+                <h1>
+                    <strong>
+                        AUXILO FINSERVE PRIVATE LIMITED
+                    </strong>
+                </h1>
+            </td>
+        </tr>
+       
+        <tr>
+            <td colspan="6" align="center" height="50">
+                <h4>
+                    <u>
+                        Vendor Payment Form
+                    </u>
+                </h4>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <h4>
+                    Venbor Name
+                </h4>
+            </td>
+            <td  colspan="2" style="background-color: white;">
+                {{vendor}}
+            </td>
+            <td>
+                <h4>
+                    Invoive Date
+                </h4>
+            </td>
+            <td  colspan="2">
+                {{invoice_date}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+            </td>
+            <td>
+                <h4>
+                    <strong>
+                        Invoice No.
+                    </strong>
+                </h4>
+            </td>
+            <td colspan="2">
+                {{ invoice_number }}
+            </td>
+        </tr>
+      
+        <tr>
+            <td>
+                <h4>
+                    Whether Purchase Order (PO) is approved
+                </h4>
+            </td>
+            <td  colspan="2" style="background-color: lightblue;">  
+                {{po_approved}}
+            </td>
+            <td>
+                <h4>
+                    Date of Expiry Purchase Order (PO)
+                </h4>
+            </td>
+            <td  colspan="2">
+                {{po_expiry_date}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>
+                    Whether Agreement is signed
+                </h4>
+            </td>
+            <td colspan="2" style="background-color: lightblue;">
+                {{agreement_signed}}
+            </td>
+            <td>
+                <h4>
+                    Date of Expiry Agreement
+                </h4>
+            </td>
+            <td colspan="2">
+                {{agreement_signed_date}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">
+                <h4>
+                    Function
+                </h4>
+            </td>
+            <td colspan="5" style="background-color: lightblue; text-align: center;">
+                <h4>
+                    MARKETING
+                </h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>
+                    Department Name
+                </h4>
+            </td>
+            <td colspan="2" style="background-color: lightblue;">
+                MARKETING SBU
+            </td>
+            <td>
+                <h4>
+                    MSME
+                </h4>
+            </td>
+            <td colspan="2">
+                {{ msme }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>
+                    Location
+                </h4>
+            </td>
+            <td colspan="2" style="background-color: lightblue;">HEAD OFFICE</td>
+            <td>
+                <h4>
+                    Ext No. / Mobile No.
+                </h4>
+            </td>
+            <td colspan="2">
+                {{ mobile_no}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6"></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h4>
+                    Nature & Description of Expense
+                </h4>
+            </td>
+            <td colspan="3">
+                <h4>
+                    Invoice Amt.
+                </h4>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h4>
+                    CIBIL Charges
+                </h4>
+            </td>
+            <td colspan="3"> 
+                -
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h4>
+                    Collection Agency Charges
+                </h4>
+            </td>
+            <td colspan="3"> 
+                -
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h4>
+                    HR and Admin Expense
+                </h4>
+            </td>
+            <td colspan="3"> 
+                -
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h4>
+                    Field Invest. Agency
+                </h4>
+            </td>
+            <td colspan="3"> 
+                -
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h4>
+                    PD expenses
+                </h4>
+            </td>
+            <td colspan="3"> 
+                -
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h4>
+                    Marketing Expenses({{ tag1 }})
+                </h4>
+            </td>
+            <td colspan="3">
+                {{ '{:.2f}'.format(total_amount) }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h4>
+                    Computer & Internet Expense
+                </h4>
+            </td>
+            <td colspan="3"> 
+                -
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h4>
+                    Stamp Duty
+                </h4>
+            </td>
+            <td colspan="3"> 
+                -
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h4>
+                    License & Certification Charges
+                </h4>
+            </td>
+            <td colspan="3"> 
+                -
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h4>
+                    Other (Please specify) -
+                </h4>
+            </td>
+            <td colspan="3"> 
+                -
+            </td>
+        </tr>
+        <tr style="background-color: #808080; color: #ffffff;">
+            <td colspan="3">
+                <h4>
+                    Total Amount in words:- {{ total_amount_words }}
+                </h4>
+            </td>
+            <td colspan="3">
+                {{ '{:.2f}'.format(total_amount) }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6" >
+                I confirm that the services/goods have been satisfactorily completed or received are as per the Terms of Agreement/PO and are within overall scope of work. The payment being approved is as per the commercial terms agreed with the vendor.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>
+                    Preparer Sign (with Date)
+                </h4>
+            </td>
+            <td colspan="1">
+                
+            </td>
+            <td>
+                <h4>
+                    Name:
+                </h4>
+            </td>
+            <td colspan="3">
+                {{ created_by }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>
+                    Reviewer Sign (with Date)
+                </h4>
+            </td>
+            <td colspan="1">
+                
+            </td>
+            <td>
+                <h4>
+                    Name:
+                </h4>
+            </td>
+            <td colspan="3">
+                {{ reviewed_by }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>
+                    Approver Sign (with Date)
+                </h4>
+            </td>
+            <td colspan="1">
+                
+            </td>
+            <td>
+                <h4>
+                    Name:
+                </h4>
+            </td>
+            <td colspan="3">
+                {{ approved_by }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>
+                    HOD Sign (with Date)
+                </h4>
+            </td>
+            <td colspan="1">
+                
+            </td>
+            <td>
+                <h4>
+                    Name:
+                </h4>
+            </td>
+            <td colspan="3">
+                {{ hod_approval }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>
+                    CEO Sign (if required) (with Date)
+                </h4>
+            </td>
+            <td colspan="1">
+                
+            </td>
+            <td>
+                <h4>
+                    Name:
+                </h4>
+            </td>
+            <td colspan="3"> 
+                {{ ceo_approval }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>
+                    MD Sign (if required) (with Date)
+                </h4>
+            </td>
+            <td colspan="1">
+                
+            </td>
+            <td>
+                <h4>
+                    Name:
+                </h4>
+            </td>
+            <td colspan="3">
+                -
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>
+                    Received Date by Accounts dept
+                </h4>
+            </td>
+            <td colspan="1">
+                
+            </td>
+            <td>
+                <h4>
+                    Name:
+                </h4>
+            </td>
+            <td colspan="3">
+                -
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
+
+
+
