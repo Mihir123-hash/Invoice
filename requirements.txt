@@ -7,3 +7,4 @@ xhtml2pdf
 num2words
 pandas
 openpyxl
+gunicorn
